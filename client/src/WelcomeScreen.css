@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap');
+
+:root {
+  --ink: #ffffff;
+  --ink-muted: #bfbfbf;
+  --canvas: #000000;
+}
+
+.welcome-screen {
+  min-height: 100vh;
+  background: var(--canvas);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 24px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  box-sizing: border-box;
+}
+
+/* Top-center branding, "GetPooling" in Bricolage Grotesque */
+.welcome-screen__brand {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+/* Everything below the wordmark is vertically + horizontally centered */
+.welcome-screen__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 420px;
+  gap: 32px;
+}
+
+.welcome-screen__message {
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: -0.3px; /* theme's body tracking, kept mild per its own "don't tighten past -0.57px" rule */
+  color: var(--ink-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.welcome-screen__ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Pill buttons, 44px height, per the theme's button spec */
+.btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  height: 44px;
+  padding: 0 28px;
+  border-radius: 9999px;
+  border: 1px solid var(--ink);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ink-muted);
+  outline-offset: 2px;
+}
+
+/* white fill / black text — the theme's only CTA treatment */
+.btn--primary {
+  background: var(--ink);
+  color: var(--canvas);
+}
+
+/* transparent / white outline — the theme's secondary CTA */
+.btn--secondary {
+  background: transparent;
+  color: var(--ink);
+}
