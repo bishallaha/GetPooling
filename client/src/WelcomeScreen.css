@@ -1,414 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap');
 
-:root {
-  /* Analogue-inspired design tokens */
-  --ink: #ffffff;
-  --ink-muted: #bfbfbf;
-  --ink-faint: #999999;
-  --canvas: #000000;
-  --hairline: #d9d9d9;
-  --accent-1: #aeaeae;
-  --accent-2: #595959;
-
-  --radius-pill: 9999px;
-  --spacing-md: 12px;
-  --spacing-base: 18px;
-  --spacing-2xl: 62px;
-}
-
-/* ---------------------------------------------------------
-   Hero stage
-   --------------------------------------------------------- */
-
-.welcome-screen {
-  min-height: 100svh;
-  width: 100%;
+.welcome {
+  min-height: 100vh;
   position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  box-sizing: border-box;
-
   display: flex;
   flex-direction: column;
-  align-items: center;
-
-  padding: clamp(24px, 2.5vw, 35px) clamp(18px, 2.6vw, 29px);
-
-  color: var(--ink);
-  background: var(--canvas);
+  background:
+    radial-gradient(circle at 50% 45%, #444 0%, #191919 25%, #000 65%);
+  color: #fff;
   font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-/* Grayscale gradients only: the palette stays monochrome while the hero
-   gets the luminous, moving feel of the reference. */
-.welcome-screen__ambient {
-  position: absolute;
-  inset: -18%;
-  z-index: -1;
-  pointer-events: none;
   overflow: hidden;
-  filter: blur(42px);
-  opacity: 0.92;
-  transform: translateZ(0);
 }
 
-.ambient {
+.welcome__brand {
   position: absolute;
-  display: block;
-  border-radius: 50%;
-  will-change: transform;
-  mix-blend-mode: screen;
+  top: 30px;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -1px;
 }
 
-.ambient--one {
-  width: 58vw;
-  height: 58vw;
-  min-width: 520px;
-  min-height: 520px;
-  left: -17vw;
-  top: -20vw;
-  background: radial-gradient(circle at 62% 62%,
-    rgba(255, 255, 255, 0.23) 0%,
-    rgba(174, 174, 174, 0.12) 19%,
-    rgba(89, 89, 89, 0.07) 39%,
-    transparent 68%);
-  animation: ambientOne 19s ease-in-out infinite alternate;
-}
-
-.ambient--two {
-  width: 64vw;
-  height: 64vw;
-  min-width: 560px;
-  min-height: 560px;
-  right: -22vw;
-  bottom: -30vw;
-  background: radial-gradient(circle at 42% 40%,
-    rgba(217, 217, 217, 0.22) 0%,
-    rgba(174, 174, 174, 0.10) 20%,
-    rgba(89, 89, 89, 0.06) 42%,
-    transparent 69%);
-  animation: ambientTwo 23s ease-in-out infinite alternate;
-}
-
-.ambient--three {
-  width: 45vw;
-  height: 45vw;
-  min-width: 420px;
-  min-height: 420px;
-  left: 28%;
-  top: 30%;
-  background: radial-gradient(ellipse at 48% 45%,
-    rgba(255, 255, 255, 0.14) 0%,
-    rgba(174, 174, 174, 0.08) 25%,
-    rgba(89, 89, 89, 0.04) 46%,
-    transparent 70%);
-  animation: ambientThree 17s ease-in-out infinite alternate;
-}
-
-.ambient--core {
-  width: 28vw;
-  height: 28vw;
-  min-width: 300px;
-  min-height: 300px;
-  left: 50%;
-  top: 57%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at center,
-    rgba(255, 255, 255, 0.10) 0%,
-    rgba(174, 174, 174, 0.055) 24%,
-    transparent 68%);
-  filter: blur(28px);
-  animation: corePulse 9s ease-in-out infinite alternate;
-}
-
-@keyframes ambientOne {
-  0% { transform: translate3d(-3%, -2%, 0) scale(0.96) rotate(0deg); }
-  100% { transform: translate3d(13%, 11%, 0) scale(1.12) rotate(8deg); }
-}
-
-@keyframes ambientTwo {
-  0% { transform: translate3d(4%, 5%, 0) scale(1.03) rotate(0deg); }
-  100% { transform: translate3d(-13%, -11%, 0) scale(0.91) rotate(-9deg); }
-}
-
-@keyframes ambientThree {
-  0% { transform: translate3d(-7%, 5%, 0) scale(0.92); }
-  100% { transform: translate3d(10%, -9%, 0) scale(1.10); }
-}
-
-@keyframes corePulse {
-  0% {
-    opacity: 0.55;
-    transform: translate(-50%, -50%) scale(0.88);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.12);
-  }
-}
-
-/* Subtle black veil keeps the animated light behind the typography. */
-.welcome-screen::after {
+.welcome::after {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: -1;
+  background: radial-gradient(circle at center, transparent 20%, #000 85%);
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 48%,
-    transparent 0%,
-    rgba(0, 0, 0, 0.08) 44%,
-    rgba(0, 0, 0, 0.42) 100%);
 }
 
-/* ---------------------------------------------------------
-   Brand
-   --------------------------------------------------------- */
-
-.welcome-screen__header {
+.welcome__brand {
+  position: absolute;
+  top: 30px;
+  left: 0;
   width: 100%;
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.welcome-screen__brand {
   margin: 0;
-  color: var(--ink);
-  font-size: 18px;
-  line-height: 21px;
+  text-align: center;
+  font-size: 28px;
   font-weight: 500;
-  letter-spacing: -0.44px;
+  letter-spacing: -1px;
 }
 
-/* ---------------------------------------------------------
-   Hero content
-   --------------------------------------------------------- */
-
-.welcome-screen__hero {
+.welcome__hero {
   flex: 1;
-  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  box-sizing: border-box;
-  padding: var(--spacing-2xl) var(--spacing-base) clamp(42px, 6vw, 78px);
+  padding: 30px;
 }
 
-.welcome-screen__copy {
-  width: min(920px, 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform: translateY(-2vh);
-}
-
-.welcome-screen__title {
-  max-width: 900px;
+.welcome__hero h2 {
   margin: 0;
-  color: var(--ink);
-  font-size: clamp(48px, 6.2vw, 78px);
-  line-height: 0.98;
+  font-size: clamp(48px, 6vw, 76px);
+  line-height: 0.95;
   font-weight: 500;
-  letter-spacing: clamp(-3.8px, -0.045em, -2.2px);
+  letter-spacing: -2.5px;
 }
 
-.welcome-screen__title span {
+.welcome__hero h2 span {
   display: block;
 }
 
-.welcome-screen__title-light {
-  margin-top: 3px;
+.welcome__hero h2 span:last-child {
   font-weight: 400;
-  opacity: 0.72;
+  opacity: 0.7;
 }
 
-.welcome-screen__message {
-  width: min(620px, 92%);
-  margin: 26px 0 58px;
-  color: var(--ink-muted);
-  font-size: clamp(16px, 1.45vw, 19px);
-  line-height: 23px;
-  font-weight: 400;
-  letter-spacing: -0.57px;
+.welcome__hero p {
+  max-width: 580px;
+  margin: 28px 0 56px;
+  color: #bfbfbf;
+  font-size: 18px;
+  line-height: 1.45;
+  letter-spacing: -0.5px;
 }
 
-/* ---------------------------------------------------------
-   CTA
-   --------------------------------------------------------- */
-
-.welcome-screen__ctas {
+.welcome__actions {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
+  gap: 12px;
 }
 
-.btn {
+.welcome__actions button {
   height: 44px;
   min-width: 158px;
-  padding: 12px 32px;
-  border-radius: var(--radius-pill);
-  box-sizing: border-box;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 18px;
-  line-height: 18px;
-  font-weight: 400;
-  letter-spacing: 0;
-  cursor: pointer;
-  transition:
-    transform 180ms ease,
-    background-color 180ms ease,
-    color 180ms ease,
-    border-color 180ms ease;
-}
-
-.btn:hover { transform: translateY(-2px); }
-.btn:active { transform: translateY(0); }
-
-.btn--primary {
-  color: var(--canvas);
-  background: var(--ink);
-  border: 1px solid var(--ink);
-}
-
-.btn--primary:hover {
-  background: #eaeaea;
-  border-color: #eaeaea;
-}
-
-.btn--secondary {
-  color: var(--ink);
+  padding: 0 28px;
+  border-radius: 9999px;
+  border: 1px solid #fff;
   background: transparent;
-  border: 1px solid var(--ink);
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.btn--secondary:hover {
-  background: rgba(255, 255, 255, 0.10);
+.welcome__actions button:first-child {
+  background: #fff;
+  color: #000;
 }
 
-.btn:focus-visible {
-  outline: 2px solid var(--ink-muted);
-  outline-offset: 3px;
+.welcome__actions button:hover {
+  opacity: 0.85;
 }
 
-/* ---------------------------------------------------------
-   Responsive
-   --------------------------------------------------------- */
-
-@media (max-width: 640px) {
-  .welcome-screen { padding: 22px 18px; }
-
-  .welcome-screen__hero { padding: 42px 0 30px; }
-
-  .welcome-screen__copy { transform: translateY(-1vh); }
-
-  .welcome-screen__title {
-    font-size: clamp(43px, 13vw, 62px);
-    line-height: 0.98;
-    letter-spacing: -0.055em;
+@media (max-width: 600px) {
+  .welcome__hero h2 {
+    font-size: 44px;
   }
 
-  .welcome-screen__message {
-    margin-top: 24px;
-    margin-bottom: 48px;
-    width: min(470px, 94%);
-    font-size: 17px;
-    line-height: 23px;
+  .welcome__hero p {
+    max-width: 340px;
+    margin-bottom: 44px;
   }
 
-  .welcome-screen__ctas {
-    width: 100%;
+  .welcome__actions {
     flex-direction: column;
-    gap: 10px;
   }
 
-  .btn { width: min(300px, 100%); }
-  .welcome-screen__ambient { filter: blur(34px); }
-
-  .ambient--one { left: -42vw; top: -20vw; }
-  .ambient--two { right: -45vw; bottom: -30vw; }
-  .ambient--three { left: 12%; top: 38%; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ambient,
-  .ambient--core { animation: none; }
-  .btn { transition: none; }
-}
-
-/* ---------------------------------------------------------
-   Refinement: centered brand + broader ambient field
-   --------------------------------------------------------- */
-.welcome-screen__header {
-  justify-content: center;
-  text-align: center;
-}
-
-.welcome-screen__brand {
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: clamp(24px, 2vw, 30px);
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: -0.6px;
-}
-
-/* Extend the light field across both sides of the stage instead of
-   concentrating the visual weight in the upper-left corner. */
-.ambient--one {
-  left: -14vw;
-  top: -16vw;
-}
-
-.ambient--two {
-  right: -10vw;
-  bottom: -20vw;
-}
-
-.ambient--three {
-  left: 48%;
-  top: 28%;
-  width: 52vw;
-  height: 52vw;
-  min-width: 480px;
-  min-height: 480px;
-}
-
-.welcome-screen__ambient::before {
-  content: '';
-  position: absolute;
-  width: 48vw;
-  height: 48vw;
-  min-width: 440px;
-  min-height: 440px;
-  right: -2vw;
-  top: 8%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 42% 50%,
-    rgba(255, 255, 255, 0.16) 0%,
-    rgba(174, 174, 174, 0.09) 22%,
-    rgba(89, 89, 89, 0.045) 43%,
-    transparent 70%);
-  filter: blur(46px);
-  animation: ambientRight 21s ease-in-out infinite alternate;
-}
-
-@keyframes ambientRight {
-  0%   { transform: translate3d(5%, -3%, 0) scale(0.92); opacity: 0.7; }
-  100% { transform: translate3d(-10%, 10%, 0) scale(1.12); opacity: 1; }
-}
-
-@media (max-width: 640px) {
-  .welcome-screen__brand {
-    font-size: 25px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .welcome-screen__ambient,
-  .ambient,
-  .welcome-screen__ambient::before {
-    animation: none;
+  .welcome__actions button {
+    width: 200px;
   }
 }
