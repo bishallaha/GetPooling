@@ -25,7 +25,7 @@ function App() {
     return <BrowseTrips onBack={() => goTo('home')} />;
   }
 
-  return <WelcomeScreen onRider={() => goTo('rider')} />;
+  return <WelcomeScreen onSelectRole={(role) => role === 'rider' && goTo('rider')} />;
 }
 
 export default App;

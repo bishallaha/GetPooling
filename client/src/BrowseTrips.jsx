@@ -53,9 +53,7 @@ function BrowseTrips({ onBack }) {
             <h1>Browse Trips</h1>
             <p>Find a regular commute that works for you.</p>
           </div>
-          <button className="back-button" type="button" onClick={onBack}>
-            Back
-          </button>
+          <button className="back-button" type="button" onClick={onBack}>Back</button>
         </div>
 
         <form className="filter-bar" onSubmit={handleSearch}>
@@ -68,7 +66,6 @@ function BrowseTrips({ onBack }) {
 
         {loading && <p className="status-msg">Loading trips...</p>}
         {error && <p className="status-msg error">{error}</p>}
-
         {!loading && !error && trips.length === 0 && (
           <p className="status-msg empty">No trips match your search. Try different filters or check back later.</p>
         )}
@@ -79,9 +76,7 @@ function BrowseTrips({ onBack }) {
               <div className="trip-card-header">
                 <h2>{trip.origin} → {trip.destination}</h2>
                 <span className={trip.seats_available > 0 ? 'seats-badge seats-open' : 'seats-badge seats-full'}>
-                  {trip.seats_available > 0
-                    ? `${trip.seats_available} seat${trip.seats_available > 1 ? 's' : ''} left`
-                    : 'Full'}
+                  {trip.seats_available > 0 ? `${trip.seats_available} seat${trip.seats_available > 1 ? 's' : ''} left` : 'Full'}
                 </span>
               </div>
               <p><strong>Driver:</strong> {trip.driver_name}</p>
