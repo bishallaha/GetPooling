@@ -89,7 +89,7 @@ function BrowseTrips() {
           <div key={trip.id} className="trip-card">
             <div className="trip-card-header">
               <h3>{trip.origin} \u2192 {trip.destination}</h3>
-              <span className={trip.seats_available > 0 ? 'seats-open' : 'seats-full'}>
+              <span className={trip.seats_available > 0 ? 'seats-badge seats-open' : 'seats-badge seats-full'}>
                 {trip.seats_available > 0
                   ? `${trip.seats_available} seat${trip.seats_available > 1 ? 's' : ''} left`
                   : 'Full'}
