@@ -1,157 +1,183 @@
-/* Theme: Analogue design tokens (theme.md) — pure-black canvas, white-only
-   text, circularXx type with negative tracking, 18px card radius, pill
-   buttons. No chromatic accent color is used anywhere below — status is
-   conveyed via weight/case, not hue, per the brand's monochrome system. */
+/* Rider page aligned with the driver-side screen and Analogue monochrome theme. */
 
-.browse-trips {
+.browse-page {
   --ink: #ffffff;
   --ink-muted: #bfbfbf;
   --canvas: #000000;
-  --surface-1: #eaeaea;
-  --hairline: #d9d9d9;
-  --accent-1: #aeaeae;
-  --accent-2: #595959;
-
+  --surface-card: #ffffff;
+  --hairline: #595959;
   --font: "circularXx", "circularXx Fallback", -apple-system, "Segoe UI", sans-serif;
 
-  --radius-md: 18px;
-  --radius-pill: 9999px;
-
-  --space-xs: 3px;
-  --space-sm: 6px;
-  --space-md: 12px;
-  --space-base: 18px;
-  --space-lg: 26px;
-  --space-xl: 35px;
-  --space-2xl: 62px;
-
-  background-color: var(--canvas);
-  color: var(--ink);
-  font-family: var(--font);
-  max-width: 720px;
-  margin: 0 auto;
-  padding: var(--space-2xl) var(--space-base);
   min-height: 100vh;
   box-sizing: border-box;
-}
-
-.browse-trips h1 {
-  font-size: 35px;
-  font-weight: 500;
-  letter-spacing: -1.18px;
-  line-height: 35px;
-  margin: 0 0 var(--space-xl) 0;
-}
-
-/* Filter bar — text-input token: transparent, underline-only, no radius */
-
-.filter-bar {
-  display: flex;
-  gap: var(--space-md);
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: var(--space-xl);
-}
-
-.filter-bar input {
-  flex: 1;
-  min-width: 120px;
-  padding: var(--space-md) 0;
-  background: transparent;
+  padding: 7rem 1.25rem;
+  background: var(--canvas);
   color: var(--ink);
-  border: none;
-  border-bottom: 1px solid var(--accent-1);
-  border-radius: 0;
   font-family: var(--font);
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0;
 }
 
-.filter-bar input::placeholder {
+.browse-panel {
+  width: min(100%, 990px);
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 2.75rem;
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  background: var(--canvas);
+}
+
+.browse-heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2.25rem;
+}
+
+.browse-heading-row h1 {
+  margin: 0;
+  font-size: clamp(2.25rem, 4vw, 3.3rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -2.64px;
+}
+
+.browse-heading-row p {
+  margin: 0.7rem 0 0;
   color: var(--ink-muted);
+  font-size: 1rem;
+  line-height: 1.4;
+  letter-spacing: -0.29px;
 }
 
-.filter-bar input:focus {
-  outline: none;
-  border-bottom-color: var(--ink);
-}
-
-/* Buttons — button-primary (white pill/black text) + button-secondary (outline pill) */
-
-.filter-bar button {
+.back-button,
+.search-button,
+.clear-button {
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 0.75rem 2.95rem;
+  border-radius: 9999px;
   font-family: var(--font);
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 400;
+  line-height: 1;
   letter-spacing: 0;
-  height: 44px;
-  padding: 12px 32px;
-  border-radius: var(--radius-pill);
-  border: none;
   cursor: pointer;
   white-space: nowrap;
 }
 
-.filter-bar button[type='submit'] {
-  background: var(--ink);
+.back-button,
+.clear-button {
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+}
+
+.search-button {
+  border: 1px solid var(--surface-card);
+  background: var(--surface-card);
   color: var(--canvas);
 }
 
-.filter-bar button[type='button'] {
-  background: transparent;
-  color: var(--ink);
-  border: 1px solid var(--ink);
+.filter-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.85rem;
 }
 
-/* Status messages sit directly on the black canvas */
+.filter-bar input {
+  width: 100%;
+  min-height: 55px;
+  box-sizing: border-box;
+  padding: 0 1.1rem;
+  border: 1px solid var(--hairline);
+  border-radius: 15px;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.05rem;
+  letter-spacing: -0.29px;
+}
+
+.filter-bar input::placeholder {
+  color: #777777;
+}
+
+.filter-bar input:focus {
+  border-color: var(--ink-muted);
+}
+
+.filter-bar input:first-child,
+.filter-bar input:nth-child(2) {
+  grid-row: 1;
+}
+
+.filter-bar input:nth-child(3) {
+  grid-column: 1 / 2;
+  grid-row: 2;
+}
+
+.search-button {
+  grid-column: 2;
+  grid-row: 2;
+  width: 100%;
+}
+
+.clear-button {
+  grid-column: 1 / -1;
+  width: 100%;
+}
 
 .status-msg {
-  text-align: center;
+  margin: 2rem 0 0;
   color: var(--ink-muted);
-  font-size: 19px;
-  font-weight: 400;
+  text-align: center;
+  font-size: 1.1rem;
   letter-spacing: -0.57px;
-  margin: var(--space-xl) 0;
 }
 
 .status-msg.error {
   color: var(--ink);
 }
 
-/* Trip cards — card token: surface-1 bg, canvas text, 18px radius, 26px padding */
-
 .trip-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: 1rem;
+  margin-top: 2.5rem;
 }
 
 .trip-card {
-  background-color: var(--surface-1);
+  box-sizing: border-box;
+  padding: 1.6rem;
+  border: 1px solid #d9d9d9;
+  border-radius: 18px;
+  background: #eaeaea;
   color: var(--canvas);
-  border-radius: var(--radius-md);
-  padding: var(--space-lg);
 }
 
 .trip-card-header {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
-  gap: var(--space-md);
-  margin-bottom: var(--space-md);
-  border-bottom: 1px solid var(--hairline);
-  padding-bottom: var(--space-md);
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #d9d9d9;
 }
 
-.trip-card-header h3 {
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: -0.44px;
+.trip-card-header h2 {
   margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.44px;
 }
 
 .seats-badge {
-  font-size: 13px;
+  flex-shrink: 0;
+  font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -163,17 +189,49 @@
 }
 
 .seats-full {
-  color: var(--accent-2);
+  color: #595959;
 }
 
 .trip-card p {
-  font-size: 14px;
-  font-weight: 400;
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+  line-height: 1.35;
   letter-spacing: -0.29px;
-  line-height: 18px;
-  margin: var(--space-xs) 0;
 }
 
 .trip-card p strong {
   font-weight: 500;
+}
+
+@media (max-width: 700px) {
+  .browse-page {
+    padding: 2rem 0.9rem;
+  }
+
+  .browse-panel {
+    padding: 1.5rem;
+  }
+
+  .browse-heading-row {
+    flex-direction: column;
+  }
+
+  .filter-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-bar input:first-child,
+  .filter-bar input:nth-child(2),
+  .filter-bar input:nth-child(3),
+  .search-button,
+  .clear-button {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .back-button,
+  .search-button,
+  .clear-button {
+    width: 100%;
+  }
 }
