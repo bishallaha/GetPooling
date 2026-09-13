@@ -53,45 +53,21 @@ function BrowseTrips({ onBack }) {
             <h1>Browse Trips</h1>
             <p>Find a regular commute that works for you.</p>
           </div>
-          <button className="back-button" type="button" onClick={onBack}>
-            Back
-          </button>
+          <button className="back-button" type="button" onClick={onBack}>Back</button>
         </div>
 
         <form className="filter-bar" onSubmit={handleSearch}>
-          <input
-            name="origin"
-            placeholder="Origin"
-            value={filters.origin}
-            onChange={handleFilterChange}
-          />
-          <input
-            name="destination"
-            placeholder="Destination"
-            value={filters.destination}
-            onChange={handleFilterChange}
-          />
-          <input
-            name="day"
-            placeholder="Days (e.g. Mon, Wed, Fri)"
-            value={filters.day}
-            onChange={handleFilterChange}
-          />
-          <button className="search-button" type="submit">
-            Search trips
-          </button>
-          <button className="clear-button" type="button" onClick={handleClear}>
-            Clear filters
-          </button>
+          <input name="origin" placeholder="Origin" value={filters.origin} onChange={handleFilterChange} />
+          <input name="destination" placeholder="Destination" value={filters.destination} onChange={handleFilterChange} />
+          <input name="day" placeholder="Days (e.g. Mon, Wed, Fri)" value={filters.day} onChange={handleFilterChange} />
+          <button className="search-button" type="submit">Search trips</button>
+          <button className="clear-button" type="button" onClick={handleClear}>Clear filters</button>
         </form>
 
         {loading && <p className="status-msg">Loading trips...</p>}
         {error && <p className="status-msg error">{error}</p>}
-
         {!loading && !error && trips.length === 0 && (
-          <p className="status-msg empty">
-            No trips match your search. Try different filters or check back later.
-          </p>
+          <p className="status-msg empty">No trips match your search. Try different filters or check back later.</p>
         )}
 
         <div className="trip-list">
@@ -100,9 +76,7 @@ function BrowseTrips({ onBack }) {
               <div className="trip-card-header">
                 <h2>{trip.origin} → {trip.destination}</h2>
                 <span className={trip.seats_available > 0 ? 'seats-badge seats-open' : 'seats-badge seats-full'}>
-                  {trip.seats_available > 0
-                    ? `${trip.seats_available} seat${trip.seats_available > 1 ? 's' : ''} left`
-                    : 'Full'}
+                  {trip.seats_available > 0 ? `${trip.seats_available} seat${trip.seats_available > 1 ? 's' : ''} left` : 'Full'}
                 </span>
               </div>
               <p><strong>Driver:</strong> {trip.driver_name}</p>
