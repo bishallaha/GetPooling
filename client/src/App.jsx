@@ -4,7 +4,9 @@ import PostTrip from './PostTrip';
 import BrowseTrips from './BrowseTrips';
 
 function getPageFromPath() {
-  return window.location.pathname === '/rider' ? 'rider' : 'home';
+  if (window.location.pathname === '/rider') return 'rider';
+  if (window.location.pathname === '/driver') return 'driver';
+  return 'home';
 }
 
 function App() {
@@ -17,7 +19,7 @@ function App() {
   }, []);
 
   const goTo = (nextPage) => {
-    const nextPath = nextPage === 'rider' ? '/rider' : '/';
+    const nextPath = nextPage === 'home' ? '/' : `/${nextPage}`;
     window.history.pushState({}, '', nextPath);
     setPage(nextPage);
   };
@@ -30,9 +32,7 @@ function App() {
     return <BrowseTrips onBack={() => goTo('home')} />;
   }
 
-  return (
-    <WelcomeScreen onSelectRole={(role) => (role === 'rider' ? goTo('rider') : setPage('driver'))} />
-  );
+  return <WelcomeScreen onSelectRole={(role) => goTo(role)} />;
 }
 
 export default App;
