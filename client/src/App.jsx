@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import BrowseTrips from './BrowseTrips';
 import WelcomeScreen from './WelcomeScreen';
+import PostTrip from './PostTrip';
+import BrowseTrips from './BrowseTrips';
 
 function getPageFromPath() {
   return window.location.pathname === '/rider' ? 'rider' : 'home';
@@ -21,11 +22,17 @@ function App() {
     setPage(nextPage);
   };
 
+  if (page === 'driver') {
+    return <PostTrip />;
+  }
+
   if (page === 'rider') {
     return <BrowseTrips onBack={() => goTo('home')} />;
   }
 
-  return <WelcomeScreen onSelectRole={(role) => role === 'rider' && goTo('rider')} />;
+  return (
+    <WelcomeScreen onSelectRole={(role) => (role === 'rider' ? goTo('rider') : setPage('driver'))} />
+  );
 }
 
 export default App;

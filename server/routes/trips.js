@@ -33,4 +33,89 @@ router.get('/', (req, res) => {
   }
 });
 
+// POST /api/trips
+router.post('/', (req, res) => {
+  const {
+    driver_name,
+    driver_phone,
+    vehicle_info,
+    origin,
+    destination,
+    days,
+    time,
+    seats
+  } = req.body;
+
+  if (
+    !driver_name?.trim() ||
+    !driver_phone?.trim() ||
+    !vehicle_info?.trim() ||
+    !origin?.trim() ||
+    !destination?.trim() ||
+    !days?.trim() ||
+    !time
+  ) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  const seatCount = Number(seats);
+
+  if (!Number.isInteger(seatCount) || seatCount <= 0) {
+    return res.status(400).json({ error: 'Seats must be a positive number' });
+  }
+
+  try {
+    const duplicate = db.prepare(`
+      SELECT id FROM trips
+      WHERE driver_phone = ?
+      AND origin = ?
+      AND destination = ?
+      AND days = ?
+      AND time = ?
+    `).get(
+      driver_phone.trim(),
+      origin.trim(),
+      destination.trim(),
+      days.trim(),
+      time
+    );
+
+    if (duplicate) {
+      return res.status(400).json({ error: 'This trip already exists' });
+    }
+
+    const result = db.prepare(`
+      INSERT INTO trips (
+        driver_name,
+        driver_phone,
+        vehicle_info,
+        origin,
+        destination,
+        days,
+        time,
+        seats_total,
+        seats_available
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      driver_name.trim(),
+      driver_phone.trim(),
+      vehicle_info.trim(),
+      origin.trim(),
+      destination.trim(),
+      days.trim(),
+      time,
+      seatCount,
+      seatCount
+    );
+
+    res.status(201).json({
+      id: result.lastInsertRowid,
+      message: 'Trip posted successfully'
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to post trip' });
+  }
+});
+
 module.exports = router;
