@@ -4,7 +4,7 @@
   --ink: #ffffff;
   --ink-muted: #bfbfbf;
   --canvas: #000000;
-  --surface-card: #ffffff;
+  --surface-card: #000000;
   --hairline: #595959;
   --font: "circularXx", "circularXx Fallback", -apple-system, "Segoe UI", sans-serif;
 
@@ -74,8 +74,8 @@
 }
 
 .search-button {
-  border: 1px solid var(--surface-card);
-  background: var(--surface-card);
+  border: 1px solid var(--ink);
+  background: var(--ink);
   color: var(--canvas);
 }
 
@@ -108,14 +108,8 @@
   border-color: var(--ink-muted);
 }
 
-.filter-bar input:first-child,
-.filter-bar input:nth-child(2) {
-  grid-row: 1;
-}
-
 .filter-bar input:nth-child(3) {
   grid-column: 1 / 2;
-  grid-row: 2;
 }
 
 .search-button {
@@ -151,10 +145,10 @@
 .trip-card {
   box-sizing: border-box;
   padding: 1.6rem;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--hairline);
   border-radius: 18px;
-  background: #eaeaea;
-  color: var(--canvas);
+  background: var(--canvas);
+  color: var(--ink);
 }
 
 .trip-card-header {
@@ -164,7 +158,7 @@
   gap: 1rem;
   margin-bottom: 0.9rem;
   padding-bottom: 0.8rem;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid var(--hairline);
 }
 
 .trip-card-header h2 {
@@ -184,16 +178,14 @@
   white-space: nowrap;
 }
 
-.seats-open {
-  color: var(--canvas);
-}
-
+.seats-open,
 .seats-full {
-  color: #595959;
+  color: var(--ink-muted);
 }
 
 .trip-card p {
   margin: 0.25rem 0;
+  color: var(--ink);
   font-size: 0.95rem;
   line-height: 1.35;
   letter-spacing: -0.29px;
@@ -220,8 +212,7 @@
     grid-template-columns: 1fr;
   }
 
-  .filter-bar input:first-child,
-  .filter-bar input:nth-child(2),
+  .filter-bar input,
   .filter-bar input:nth-child(3),
   .search-button,
   .clear-button {

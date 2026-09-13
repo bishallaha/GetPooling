@@ -59,39 +59,18 @@ function BrowseTrips({ onBack }) {
         </div>
 
         <form className="filter-bar" onSubmit={handleSearch}>
-          <input
-            name="origin"
-            placeholder="Origin"
-            value={filters.origin}
-            onChange={handleFilterChange}
-          />
-          <input
-            name="destination"
-            placeholder="Destination"
-            value={filters.destination}
-            onChange={handleFilterChange}
-          />
-          <input
-            name="day"
-            placeholder="Days (e.g. Mon, Wed, Fri)"
-            value={filters.day}
-            onChange={handleFilterChange}
-          />
-          <button className="search-button" type="submit">
-            Search trips
-          </button>
-          <button className="clear-button" type="button" onClick={handleClear}>
-            Clear filters
-          </button>
+          <input name="origin" placeholder="Origin" value={filters.origin} onChange={handleFilterChange} />
+          <input name="destination" placeholder="Destination" value={filters.destination} onChange={handleFilterChange} />
+          <input name="day" placeholder="Days (e.g. Mon, Wed, Fri)" value={filters.day} onChange={handleFilterChange} />
+          <button className="search-button" type="submit">Search trips</button>
+          <button className="clear-button" type="button" onClick={handleClear}>Clear filters</button>
         </form>
 
         {loading && <p className="status-msg">Loading trips...</p>}
         {error && <p className="status-msg error">{error}</p>}
 
         {!loading && !error && trips.length === 0 && (
-          <p className="status-msg empty">
-            No trips match your search. Try different filters or check back later.
-          </p>
+          <p className="status-msg empty">No trips match your search. Try different filters or check back later.</p>
         )}
 
         <div className="trip-list">
