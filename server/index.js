@@ -1,5 +1,6 @@
 const express = require('express');
 const tripsRouter = require('./routes/trips');
+const requestsRouter = require('./routes/requests');
 
 const app = express();
 const PORT = 3000;
@@ -20,6 +21,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/trips', tripsRouter);
+app.use('/api', requestsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

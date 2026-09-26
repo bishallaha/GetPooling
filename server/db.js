@@ -15,7 +15,15 @@ db.exec(`
     time TEXT NOT NULL,
     seats_total INTEGER NOT NULL,
     seats_available INTEGER NOT NULL
-  )
+  );
+
+  CREATE TABLE IF NOT EXISTS join_requests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    trip_id INTEGER NOT NULL,
+    rider_name TEXT NOT NULL,
+    rider_phone TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'pending'
+  );
 `);
 
 module.exports = db;
