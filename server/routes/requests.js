@@ -4,6 +4,54 @@ const db = require('../db');
 const router = express.Router();
 
 
+// GET /api/requests?rider_phone=  or  ?driver_phone=
+// Rider sees their own requests; driver sees requests on their trips
+router.get('/requests', (req, res) => {
+  // A repeated param arrives as an array; treat anything but a string as missing
+  const { rider_phone, driver_phone } = req.query;
+  const riderPhone = typeof rider_phone === 'string' ? rider_phone.trim() : '';
+  const driverPhone = typeof driver_phone === 'string' ? driver_phone.trim() : '';
+
+  if (!riderPhone && !driverPhone) {
+    return res.status(400).json({
+      error: 'rider_phone or driver_phone is required'
+    });
+  }
+
+  let query = `
+    SELECT
+      jr.id, jr.trip_id, jr.rider_name, jr.rider_phone, jr.status,
+      t.origin, t.destination, t.days, t.time, t.driver_name,
+      t.seats_available, t.seats_total
+    FROM join_requests jr
+    JOIN trips t ON t.id = jr.trip_id
+    WHERE 1=1
+  `;
+  const params = [];
+
+  if (riderPhone) {
+    query += ' AND jr.rider_phone = ?';
+    params.push(riderPhone);
+  }
+  if (driverPhone) {
+    query += ' AND t.driver_phone = ?';
+    params.push(driverPhone);
+  }
+
+  query += ' ORDER BY jr.id DESC';
+
+  try {
+    res.json(db.prepare(query).all(...params));
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      error: 'Failed to fetch join requests'
+    });
+  }
+});
+
+
 // POST /api/trips/:id/requests
 // Rider sends a request to join a trip
 router.post('/trips/:id/requests', (req, res) => {
@@ -33,6 +81,18 @@ router.post('/trips/:id/requests', (req, res) => {
     if (trip.seats_available <= 0) {
       return res.status(400).json({
         error: 'No seats available'
+      });
+    }
+
+    // One live request per rider per trip; re-asking after a rejection is fine
+    const existing = db.prepare(`
+      SELECT id FROM join_requests
+      WHERE trip_id = ? AND rider_phone = ? AND status != 'rejected'
+    `).get(tripId, rider_phone.trim());
+
+    if (existing) {
+      return res.status(400).json({
+        error: 'You already requested this trip'
       });
     }
 
