@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import WelcomeScreen from './WelcomeScreen';
 import PostTrip from './PostTrip';
 import BrowseTrips from './BrowseTrips';
+import MyTrips from './MyTrips';
+import MyRequests from './MyRequests';
+
+const PAGES = ['rider', 'driver', 'driver/trips', 'rider/requests'];
 
 function getPageFromPath() {
-  if (window.location.pathname === '/rider') return 'rider';
-  if (window.location.pathname === '/driver') return 'driver';
-  return 'home';
+  const path = window.location.pathname.replace(/^\/|\/$/g, '');
+  return PAGES.includes(path) ? path : 'home';
 }
 
 function App() {
@@ -25,11 +28,19 @@ function App() {
   };
 
   if (page === 'driver') {
-    return <PostTrip />;
+    return <PostTrip onMyTrips={() => goTo('driver/trips')} />;
+  }
+
+  if (page === 'driver/trips') {
+    return <MyTrips onBack={() => goTo('driver')} />;
   }
 
   if (page === 'rider') {
-    return <BrowseTrips onBack={() => goTo('home')} />;
+    return <BrowseTrips onBack={() => goTo('home')} onMyRequests={() => goTo('rider/requests')} />;
+  }
+
+  if (page === 'rider/requests') {
+    return <MyRequests onBack={() => goTo('rider')} />;
   }
 
   return <WelcomeScreen onSelectRole={(role) => goTo(role)} />;

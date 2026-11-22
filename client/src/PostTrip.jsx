@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import './PostTrip.css';
+import './MyPages.css';
 
-export default function PostTrip() {
+export default function PostTrip({ onMyTrips }) {
   const [form, setForm] = useState({
     driver_name: '',
     driver_phone: '',
@@ -83,6 +84,8 @@ export default function PostTrip() {
 
           {message && <p className="post-trip__message">{message}</p>}
         </form>
+
+        <button className="my-trips-button" type="button" onClick={onMyTrips}>My trips</button>
       </div>
     </main>
   );
