@@ -1,13 +1,25 @@
 import { useEffect, useState } from 'react';
 import './BrowseTrips.css';
+import './MyPages.css';
 
 const API_BASE = 'http://localhost:3000/api';
 
-function BrowseTrips({ onBack }) {
+function loadRider() {
+  try {
+    return JSON.parse(localStorage.getItem('rider')) || { name: '', phone: '' };
+  } catch {
+    return { name: '', phone: '' };
+  }
+}
+
+function BrowseTrips({ onBack, onMyRequests }) {
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({ origin: '', destination: '', day: '' });
+  const [rider, setRider] = useState(loadRider);
+  const [joinTripId, setJoinTripId] = useState(null);
+  const [joinResults, setJoinResults] = useState({});
 
   const fetchTrips = async (query = {}) => {
     setLoading(true);
@@ -45,6 +57,35 @@ function BrowseTrips({ onBack }) {
     fetchTrips(clearedFilters);
   };
 
+  const handleRiderChange = (event) => {
+    setRider({ ...rider, [event.target.name]: event.target.value });
+  };
+
+  const handleJoin = async (event, tripId) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(`${API_BASE}/trips/${tripId}/requests`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rider_name: rider.name, rider_phone: rider.phone })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        setJoinResults((prev) => ({ ...prev, [tripId]: { error: data.error || 'Something went wrong.' } }));
+        return;
+      }
+      setJoinResults((prev) => ({ ...prev, [tripId]: { pending: true } }));
+      setJoinTripId(null);
+      try {
+        localStorage.setItem('rider', JSON.stringify({ name: rider.name.trim(), phone: rider.phone.trim() }));
+      } catch {
+        // storage unavailable, prefill just won't work next time
+      }
+    } catch {
+      setJoinResults((prev) => ({ ...prev, [tripId]: { error: 'Could not connect to the server.' } }));
+    }
+  };
+
   return (
     <main className="browse-page">
       <section className="browse-panel">
@@ -53,7 +94,10 @@ function BrowseTrips({ onBack }) {
             <h1>Browse Trips</h1>
             <p>Find a regular commute that works for you.</p>
           </div>
-          <button className="back-button" type="button" onClick={onBack}>Back</button>
+          <div className="heading-actions">
+            <button className="back-button" type="button" onClick={onMyRequests}>My requests</button>
+            <button className="back-button" type="button" onClick={onBack}>Back</button>
+          </div>
         </div>
 
         <form className="filter-bar" onSubmit={handleSearch}>
@@ -83,6 +127,20 @@ function BrowseTrips({ onBack }) {
               <p><strong>Vehicle:</strong> {trip.vehicle_info}</p>
               <p><strong>Days:</strong> {trip.days}</p>
               <p><strong>Time:</strong> {trip.time}</p>
+
+              {joinResults[trip.id]?.pending ? (
+                <p className="request-note">Request pending</p>
+              ) : joinTripId === trip.id ? (
+                <form className="join-form" onSubmit={(event) => handleJoin(event, trip.id)}>
+                  <input name="name" placeholder="Your name" value={rider.name} onChange={handleRiderChange} />
+                  <input name="phone" placeholder="Phone number" value={rider.phone} onChange={handleRiderChange} />
+                  <button className="search-button" type="submit">Send</button>
+                  <button className="back-button" type="button" onClick={() => setJoinTripId(null)}>Cancel</button>
+                </form>
+              ) : trip.seats_available > 0 && (
+                <button className="search-button join-button" type="button" onClick={() => setJoinTripId(trip.id)}>Request to join</button>
+              )}
+              {joinResults[trip.id]?.error && <p className="card-error">{joinResults[trip.id].error}</p>}
             </article>
           ))}
         </div>

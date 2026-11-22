@@ -3,9 +3,9 @@ const db = require('../db');
 
 const router = express.Router();
 
-// GET /api/trips?origin=&destination=&day=
+// GET /api/trips?origin=&destination=&day=&driver_phone=
 router.get('/', (req, res) => {
-  const { origin, destination, day } = req.query;
+  const { origin, destination, day, driver_phone } = req.query;
 
   let query = 'SELECT * FROM trips WHERE 1=1';
   const params = [];
@@ -21,6 +21,10 @@ router.get('/', (req, res) => {
   if (day) {
     query += ' AND days LIKE ?';
     params.push(`%${day}%`);
+  }
+  if (typeof driver_phone === 'string' && driver_phone.trim()) {
+    query += ' AND driver_phone = ?';
+    params.push(driver_phone.trim());
   }
 
   query += ' ORDER BY id DESC';

@@ -1,0 +1,29 @@
+/* Shared bits for My trips / My requests / Request to join. Builds on BrowseTrips.css tokens (monochrome theme). */
+
+.heading-actions { display: flex; gap: 0.75rem; }
+.phone-form, .join-form { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+.join-form { margin-top: 1rem; }
+.phone-form input, .join-form input { flex: 1 1 200px; min-height: 48px; box-sizing: border-box; padding: 0 1.1rem; border: 1px solid var(--hairline); border-radius: 15px; outline: none; background: transparent; color: var(--ink); font: inherit; font-size: 1rem; letter-spacing: -0.29px; }
+.phone-form input::placeholder, .join-form input::placeholder { color: #777777; }
+.phone-form input:focus, .join-form input:focus { border-color: var(--ink-muted); }
+.phone-form .search-button, .join-form .search-button, .join-form .back-button { width: auto; }
+.trip-card .join-button { width: auto; margin-top: 1rem; }
+.trip-card .request-note { margin-top: 1rem; color: var(--ink-muted); }
+.trip-card .card-error { margin-top: 0.75rem; color: var(--ink); }
+
+.status-badge { display: inline-block; padding: 0.3rem 0.8rem; border: 1px solid var(--hairline); border-radius: 9999px; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; white-space: nowrap; }
+.status-badge.pending { border-color: var(--ink-muted); color: var(--ink-muted); }
+.status-badge.approved { border-color: var(--ink); background: var(--ink); color: var(--canvas); }
+.status-badge.rejected { color: #777777; text-decoration: line-through; }
+
+.request-heading { margin: 1.2rem 0 0.5rem; font-size: 0.95rem; font-weight: 500; letter-spacing: -0.29px; }
+.request-list { margin: 0; padding: 0; list-style: none; }
+.request-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 0.7rem 0; border-top: 1px solid var(--hairline); font-size: 0.95rem; }
+.request-row .request-who { flex: 1 1 200px; }
+.request-actions { display: flex; gap: 0.5rem; }
+.request-actions button { width: auto; min-height: 36px; padding: 0.5rem 1.4rem; font-size: 0.95rem; }
+
+/* PostTrip lives outside .browse-page, so this uses literal colors like PostTrip.css. */
+.post-trip .my-trips-button { width: 100%; border: 1px solid #fff; background: transparent; color: #fff; }
+
+@media (max-width: 700px) { .heading-actions { flex-direction: column; width: 100%; } .phone-form .search-button, .join-form .search-button, .join-form .back-button, .trip-card .join-button { width: 100%; } }

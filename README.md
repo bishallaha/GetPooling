@@ -30,4 +30,18 @@ Drivers can post their trips, while riders can browse available trips and reques
 ```text
 GetPooling/
 ├── client/        # React frontend
-└── server/        # Express backend and SQLite database﻿# GetPooling — Carpool Coordination App
+└── server/        # Express backend and SQLite database
+```
+
+## Running the demo
+
+```bash
+# Terminal 1: API on http://localhost:3000
+cd server && npm install && node seed.js && node index.js
+
+# Terminal 2: app on http://localhost:5173
+cd client && npm install && npm run dev
+```
+
+`node seed.js` adds three sample trips, but only when the database is empty.
+To start fresh, delete `server/carpool.db` and run it again.
