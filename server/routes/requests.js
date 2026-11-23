@@ -21,7 +21,7 @@ router.get('/requests', (req, res) => {
   let query = `
     SELECT
       jr.id, jr.trip_id, jr.rider_name, jr.rider_phone, jr.status,
-      t.origin, t.destination, t.days, t.time, t.driver_name,
+      t.origin, t.destination, t.days, t.time, t.driver_name, t.driver_phone,
       t.seats_available, t.seats_total
     FROM join_requests jr
     JOIN trips t ON t.id = jr.trip_id

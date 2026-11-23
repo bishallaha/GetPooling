@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './BrowseTrips.css';
 import './MyPages.css';
 
@@ -20,13 +20,14 @@ function MyTrips({ onBack }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchAll = async (driverPhone) => {
+  // silent = background refresh, no "Loading..." flash
+  const fetchAll = async (driverPhone, silent = false) => {
     if (!driverPhone) {
       setError('Enter the phone number you posted your trips with.');
       return;
     }
 
-    setLoading(true);
+    if (!silent) setLoading(true);
     setError(null);
     try {
       const query = `driver_phone=${encodeURIComponent(driverPhone)}`;
@@ -53,6 +54,13 @@ function MyTrips({ onBack }) {
       setLoading(false);
     }
   };
+
+  // ponytail: polls every 5s; switch to server-sent events if many users ever hit this
+  useEffect(() => {
+    if (!loadedPhone) return;
+    const timer = setInterval(() => fetchAll(loadedPhone, true), 5000);
+    return () => clearInterval(timer);
+  }, [loadedPhone]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
