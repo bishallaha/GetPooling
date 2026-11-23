@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './BrowseTrips.css';
 import './MyPages.css';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = '/api';
 
 function loadDriverPhone() {
   try {

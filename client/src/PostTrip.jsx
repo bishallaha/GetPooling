@@ -25,7 +25,7 @@ export default function PostTrip({ onMyTrips }) {
     setMessage('');
 
     try {
-      const response = await fetch('http://localhost:3000/api/trips', {
+      const response = await fetch('/api/trips', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
