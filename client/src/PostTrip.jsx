@@ -2,17 +2,20 @@ import { useState } from 'react';
 import './PostTrip.css';
 import './MyPages.css';
 
+const EMPTY_FORM = {
+  driver_name: '',
+  driver_phone: '',
+  license_number: '',
+  vehicle_info: '',
+  origin: '',
+  destination: '',
+  days: '',
+  time: '',
+  seats: ''
+};
+
 export default function PostTrip({ onMyTrips }) {
-  const [form, setForm] = useState({
-    driver_name: '',
-    driver_phone: '',
-    vehicle_info: '',
-    origin: '',
-    destination: '',
-    days: '',
-    time: '',
-    seats: ''
-  });
+  const [form, setForm] = useState(EMPTY_FORM);
 
   const [message, setMessage] = useState('');
 
@@ -40,16 +43,7 @@ export default function PostTrip({ onMyTrips }) {
 
       setMessage('Trip posted successfully.');
 
-      setForm({
-        driver_name: '',
-        driver_phone: '',
-        vehicle_info: '',
-        origin: '',
-        destination: '',
-        days: '',
-        time: '',
-        seats: ''
-      });
+      setForm(EMPTY_FORM);
     } catch {
       setMessage('Could not connect to the server.');
     }
@@ -64,6 +58,7 @@ export default function PostTrip({ onMyTrips }) {
         <form onSubmit={handleSubmit}>
           <input name="driver_name" placeholder="Your name" value={form.driver_name} onChange={handleChange} />
           <input name="driver_phone" placeholder="Phone number" value={form.driver_phone} onChange={handleChange} />
+          <input name="license_number" placeholder="Driving licence number" value={form.license_number} onChange={handleChange} />
 
           <div className="form-row">
             <input name="origin" placeholder="Origin" value={form.origin} onChange={handleChange} />

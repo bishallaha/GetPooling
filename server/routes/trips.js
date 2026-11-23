@@ -13,7 +13,13 @@ router.get('/', (req, res) => {
   const day = clean(req.query.day);
   const driverPhone = clean(req.query.driver_phone);
 
-  let query = 'SELECT * FROM trips WHERE 1=1';
+  // Public list: never send the licence number itself, only whether one is on file
+  let query = `
+    SELECT id, driver_name, driver_phone, vehicle_info, origin, destination,
+      days, time, seats_total, seats_available,
+      license_number IS NOT NULL AS has_license
+    FROM trips WHERE 1=1
+  `;
   const params = [];
 
   if (origin) {
@@ -53,7 +59,8 @@ router.post('/', (req, res) => {
     destination,
     days,
     time,
-    seats
+    seats,
+    license_number
   } = req.body;
 
   if (
@@ -72,6 +79,13 @@ router.post('/', (req, res) => {
 
   if (!Number.isInteger(seatCount) || seatCount <= 0) {
     return res.status(400).json({ error: 'Seats must be a positive number' });
+  }
+
+  // ponytail: format check only, no real verification; add an upload/verify step if it ever matters
+  const license = typeof license_number === 'string' ? license_number.trim().toUpperCase() : '';
+
+  if (!/^[A-Z0-9 -]{5,20}$/.test(license)) {
+    return res.status(400).json({ error: 'Enter a valid driving licence number (5-20 letters or numbers)' });
   }
 
   try {
@@ -104,9 +118,10 @@ router.post('/', (req, res) => {
         days,
         time,
         seats_total,
-        seats_available
+        seats_available,
+        license_number
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       driver_name.trim(),
       driver_phone.trim(),
@@ -116,7 +131,8 @@ router.post('/', (req, res) => {
       days.trim(),
       time,
       seatCount,
-      seatCount
+      seatCount,
+      license
     );
 
     res.status(201).json({

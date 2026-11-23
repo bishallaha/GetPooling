@@ -123,7 +123,10 @@ function BrowseTrips({ onBack, onMyRequests }) {
                   {trip.seats_available > 0 ? `${trip.seats_available} seat${trip.seats_available > 1 ? 's' : ''} left` : 'Full'}
                 </span>
               </div>
-              <p><strong>Driver:</strong> {trip.driver_name}</p>
+              <p>
+                <strong>Driver:</strong> {trip.driver_name}
+                {trip.has_license ? <span className="status-badge licence-badge">Licence verified</span> : null}
+              </p>
               <p><strong>Vehicle:</strong> {trip.vehicle_info}</p>
               <p><strong>Days:</strong> {trip.days}</p>
               <p><strong>Time:</strong> {trip.time}</p>

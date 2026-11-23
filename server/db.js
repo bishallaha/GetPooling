@@ -26,4 +26,8 @@ db.exec(`
   );
 `);
 
+// Added after launch: add the column in place so existing databases keep their trips
+const hasLicense = db.prepare("SELECT 1 FROM pragma_table_info('trips') WHERE name = 'license_number'").get();
+if (!hasLicense) db.exec('ALTER TABLE trips ADD COLUMN license_number TEXT');
+
 module.exports = db;
